@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "phantra-ai": {
+      "url": "https://api.phantra.ai/mcp"
+    }
+  }
+}

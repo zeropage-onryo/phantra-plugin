@@ -1,0 +1,11 @@
+{
+  "name": "phantra-ai",
+  "version": "1.0.0",
+  "description": "Make AI images and video from an idea or a product photo, right from your AI assistant. Every still and clip is quoted in credits first and made only on your yes.",
+  "author": { "name": "Phantra" },
+  "homepage": "https://phantra.ai/mcp",
+  "repository": "https://github.com/zeropage-onryo/phantra-plugin",
+  "license": "MIT",
+  "keywords": ["video", "ai-video", "image-generation", "filmmaking", "storyboard", "ads", "creators", "mcp"],
+  "logo": "assets/logo.png"
+}

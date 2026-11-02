@@ -1,0 +1,11 @@
+{
+  "name": "phantra-ai",
+  "version": "1.0.0",
+  "description": "Make AI images and video from an idea or a product photo, right from your AI assistant. Every still and clip is quoted in credits first and made only on your yes.",
+  "mcpServers": {
+    "phantra-ai": {
+      "httpUrl": "https://api.phantra.ai/mcp"
+    }
+  },
+  "contextFileName": "GEMINI.md"
+}
