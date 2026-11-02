@@ -12,7 +12,8 @@ for dir in skills/*/; do
   skill=$(basename "$dir")
   # Title case in Python: macOS sed has no \b or \u.
   title=$(python3 -c 'import sys;print(sys.argv[1].replace("-"," ").title().replace("Ai ","AI ").replace("Ugc","UGC"))' "$skill")
-  cmd=(clawhub skill publish "$dir" --slug "phantra-ai-$skill" --name "Phantra AI: $title" --version "$VERSION"
+  # Absolute path: clawhub reads a relative one against its own --dir, not the cwd.
+  cmd=(clawhub skill publish "$PWD/$dir" --slug "phantra-ai-$skill" --name "Phantra AI: $title" --version "$VERSION"
        --source-repo zeropage-onryo/phantra-plugin --source-commit "$COMMIT" --source-path "skills/$skill")
   if [[ "${1:-}" == "--go" ]]; then "${cmd[@]}"; else printf '%q ' "${cmd[@]}"; echo; fi
 done
