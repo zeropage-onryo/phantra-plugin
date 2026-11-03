@@ -1,7 +1,8 @@
 # Phantra
 
-The `phantra-ai` MCP server connects to the person's Phantra account (AI image and video
-studio). Sign in once with `/mcp auth phantra-ai`.
+The Phantra MCP server connects to the person's Phantra account (AI image and video
+studio). They sign in once through the browser: in Gemini CLI with `/mcp auth phantra-ai`,
+in Antigravity when the server first connects.
 
 Rules for every session:
 

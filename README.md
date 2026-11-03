@@ -32,6 +32,13 @@ You need a Phantra account (any plan, including the free trial): https://phantra
 Then run `/mcp auth phantra-ai` and sign in. Sign-in opens a browser, so it needs a desktop
 session.
 
+**Antigravity**
+
+    agy plugin install https://github.com/zeropage-onryo/phantra-plugin
+
+Then open `/mcp`, pick `phantra-ai_phantra`, choose Authenticate, sign in to Phantra in the
+browser and paste the code Antigravity's page shows back into the CLI.
+
 **Cursor**
 
 Install Phantra AI from the Cursor Marketplace, or add the server yourself in

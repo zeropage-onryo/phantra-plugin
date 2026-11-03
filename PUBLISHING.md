@@ -59,3 +59,20 @@ Every plugin is reviewed by hand and must be open source (this repo is MIT). For
 the wait at weeks to months with no confirmation email; Cursor staff say don't resubmit.
 Cursor's plugin docs show only header auth for remote servers; Phantra uses OAuth, which
 Cursor's MCP client handles on its own — confirm in the local test.
+
+## 5. Antigravity (≈15 min, then Google's review)
+
+The repo is also an Antigravity plugin: `.antigravity-plugin/plugin.json` (the manifest, in the
+folder Antigravity reads first in a repo that ships other plugins) and `mcp_config.json` (the
+server, OAuth). Anyone can install it from GitHub; the curated Marketplace takes partners
+through Google's interest form (antigravity.google/docs/build-plugins).
+
+1. Install the CLI: `curl -fsSL https://antigravity.google/cli/install.sh | bash`.
+2. `agy plugin validate --strict .` must show no errors or warnings.
+3. `agy plugin install https://github.com/zeropage-onryo/phantra-plugin`, start `agy`, open `/mcp`,
+   pick `phantra-ai_phantra` → Authenticate, sign in to Phantra in the browser, Allow, paste the
+   code antigravity.google/oauth-callback shows, then ask for the balance. Done 2026-11-02:
+   `[Authed]`, 42 tools, balance answered.
+   Print mode (`agy -p`) never signs in; do it once interactively.
+4. Submit the repo through the interest form linked from the Build plugins page.
+

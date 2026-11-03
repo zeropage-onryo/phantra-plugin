@@ -1,0 +1,18 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "phantra-ai",
+  "displayName": "Phantra AI",
+  "version": "1.1.0",
+  "description": "Make AI images and video from an idea or a product photo. Every still and clip is quoted in credits first and made only on your yes.",
+  "logo": "assets/logo.png",
+  "suggestedPrompts": [
+    "What's my Phantra balance, and what can I make here?",
+    "Turn my product photo into a short video ad",
+    "Show my recent Phantra renders"
+  ],
+  "author": { "name": "Phantra", "url": "https://phantra.ai" },
+  "homepage": "https://phantra.ai/mcp",
+  "repository": "https://github.com/zeropage-onryo/phantra-plugin",
+  "license": "MIT",
+  "keywords": ["video", "ai-video", "image-generation", "filmmaking", "storyboard", "ads", "creators", "mcp"]
+}

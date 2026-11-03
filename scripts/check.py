@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Check the package before a release.  python3 scripts/check.py
 
-- gemini-extension.json, .cursor-plugin/plugin.json and mcp.json parse, agree on name and
-  version, and point at https://api.phantra.ai/mcp;
+- gemini-extension.json, .cursor-plugin/plugin.json (servers inline: a root mcp.json would be
+  flagged by Antigravity's strict check), .antigravity-plugin/plugin.json and mcp_config.json
+  parse, agree on name and version, and point at https://api.phantra.ai/mcp;
+- Gemini's context file is rules/GEMINI.md, where Antigravity reads it as an always-on rule;
 - every skills/<dir>/SKILL.md has frontmatter `name` equal to <dir> (1-64 chars, a-z 0-9 -)
   and a `description` of at most 1,024 characters;
 - no skill names a tool this server doesn't have: the Claude door's `open_in_studio`, or the
@@ -24,17 +26,28 @@ def load(rel):
         fail.append(f"{rel}: {e}")
         return {}
 
-gem, cur, mcp = load("gemini-extension.json"), load(".cursor-plugin/plugin.json"), load("mcp.json")
-if gem.get("name") != cur.get("name"):
-    fail.append("name differs between gemini-extension.json and .cursor-plugin/plugin.json")
-if gem.get("version") != cur.get("version"):
-    fail.append("version differs between gemini-extension.json and .cursor-plugin/plugin.json")
+gem, cur = load("gemini-extension.json"), load(".cursor-plugin/plugin.json")
+agy, agy_mcp = load(".antigravity-plugin/plugin.json"), load("mcp_config.json")
+for other, rel in ((cur, ".cursor-plugin/plugin.json"), (agy, ".antigravity-plugin/plugin.json")):
+    for key in ("name", "version"):
+        if gem.get(key) != other.get(key):
+            fail.append(f"{key} differs between gemini-extension.json and {rel}")
 if [s.get("httpUrl") for s in gem.get("mcpServers", {}).values()] != [URL]:
     fail.append("gemini-extension.json must declare one server with httpUrl " + URL)
-if [s.get("url") for s in mcp.get("mcpServers", {}).values()] != [URL]:
-    fail.append("mcp.json must declare one server with url " + URL)
-if not (ROOT / cur.get("logo", "missing")).is_file():
-    fail.append("Cursor logo file missing")
+if [s.get("url") for s in cur.get("mcpServers", {}).values()] != [URL]:
+    fail.append(".cursor-plugin/plugin.json must declare one server with url " + URL)
+if gem.get("contextFileName") != "rules/GEMINI.md" or not (ROOT / "rules/GEMINI.md").is_file():
+    fail.append("gemini-extension.json must point contextFileName at rules/GEMINI.md")
+for stray in ("mcp.json", "GEMINI.md"):
+    if (ROOT / stray).exists():
+        fail.append(f"root {stray}: Antigravity's strict check flags it as never loaded")
+if [s.get("serverUrl") for s in agy_mcp.get("mcpServers", {}).values()] != [URL]:
+    fail.append("mcp_config.json must declare one server with serverUrl " + URL)
+for logo_of, rel in ((cur, "Cursor"), (agy, "Antigravity")):
+    if not (ROOT / logo_of.get("logo", "missing")).is_file():
+        fail.append(f"{rel} logo file missing")
+if len(agy.get("suggestedPrompts", [])) > 3:
+    fail.append("Antigravity allows at most 3 suggestedPrompts")
 
 tools = {l.strip() for l in (ROOT / "scripts/mcp-tools.txt").read_text().splitlines()
          if l.strip() and not l.startswith("#")}
@@ -60,7 +73,7 @@ for d in skills:
     if re.search(r"\b(ChatGPT|Claude)\b", text):
         fail.append(f"{d.name}: names a single assistant")
 
-for rel in ("README.md", "GEMINI.md"):
+for rel in ("README.md", "rules/GEMINI.md"):
     if re.search(r"\bChatGPT\b", (ROOT / rel).read_text()):
         fail.append(f"{rel}: names ChatGPT")
 
