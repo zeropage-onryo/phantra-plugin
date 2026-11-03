@@ -2,7 +2,7 @@
 
 The Phantra MCP server connects to the person's Phantra account (AI image and video
 studio). They sign in once through the browser: in Gemini CLI with `/mcp auth phantra-ai`,
-in Antigravity when the server first connects.
+in Antigravity from `/mcp` (pick `phantra-ai_phantra`, then Authenticate).
 
 Rules for every session:
 
